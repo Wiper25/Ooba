@@ -1,28 +1,82 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <topBlock :class="{ bgTop: !status }" @menuStatusTop="menuStatusApp" />
+    <mobileMenu
+      @exitMenu="exitMenu"
+      :class="{ displayNone: status }"
+      class="mobileMenu"
+    />
+    <aboutBlock :style="status ? '' : 'filter: blur(50px)'" />
+    <exportBlock :style="status ? '' : 'filter: blur(50px)'" />
+    <missionBlock :style="status ? '' : 'filter: blur(50px)'" />
+    <logisticsBlock :style="status ? '' : 'filter: blur(50px)'" />
+    <bottomBlock :style="status ? '' : 'filter: blur(50px)'" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import topBlock from "./components/topBlock.vue";
+import mobileMenu from "./components/mobileMenu.vue";
+import aboutBlock from "./components/aboutBlock.vue";
+import exportBlock from "./components/exportBlock.vue";
+import missionBlock from "./components/missionBlock.vue";
+import logisticsBlock from "./components/logisticsBlock.vue";
+import bottomBlock from "./components/bottomBlock.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    topBlock,
+    mobileMenu,
+    aboutBlock,
+    exportBlock,
+    missionBlock,
+    logisticsBlock,
+    bottomBlock,
+  },
+  data() {
+    return {
+      status: true,
+      menuClick: false,
+    };
+  },
+  methods: {
+    menuStatusApp(status) {
+      this.status = status;
+    },
+    exitMenu(exit) {
+      this.status = exit;
+      this.menuClick = exit;
+    },
+  },
+};
 </script>
 
 <style>
+html {
+  scroll-behavior: smooth;
+}
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+</style>
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  position: relative;
+}
+.displayNone {
+  display: none;
+}
+.mobileMenu {
+  position: absolute;
+}
+.bgTop {
+  background-color: #14142a;
+}
+.bg {
+  height: 100%;
+  background-color: #ffffffab;
 }
 </style>
